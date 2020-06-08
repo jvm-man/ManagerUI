@@ -4,30 +4,54 @@ import { BaseController } from "./BaseController";
 
 export class LoginController extends BaseController {
 
+    private title = this.createElement("h2", 'Please Login');
+    private userName = this.createElement("label", "Username:");
+    private userNameInput = this.createElement("input");
+    private password = this.createElement("label", "Password:");
+    private passwordInput = this.createElement("input");
+    private errorLabel = this.createElement("label")
+
+    private loginButton = this.createElement("button", 'Login', () => {
+        if (this.userNameInput.value && this.passwordInput.value) {
+            this.resetErrorLabel();
+
+
+
+        } else {
+            this.showErrorLabel('Please fill both fields!');
+        }
+    });
+
+    private resetErrorLabel() {
+        this.errorLabel.style.color = 'red';
+        this.errorLabel.style.visibility = 'hidden';
+    }
+    private showErrorLabel(errorMessage: string) {
+        this.errorLabel.innerText = errorMessage;
+        this.errorLabel.style.visibility = 'visible';
+    }
+
+
+
     public createView(): HTMLDivElement {
-        const title = this.createElement("h2", 'Please Login');
-        const userName = this.createElement("label", "Username:");
-        const userNameInput = this.createElement("input");
+        this.passwordInput.type = 'Password';
+        this.resetErrorLabel()
 
-        const breakElem = this.createElement("br");
-        const breakElem2 = this.createElement("br");
 
-        const password = this.createElement("label", "Password:");
 
-        const passwordInput = this.createElement("input");
-        passwordInput.type = 'Password';
 
-        const loginButton = this.createElement("button", 'Login');
-        loginButton.innerText = 'Login';
+
         this.container.append(
-            title,
-            userName,
-            userNameInput,
-            breakElem2,
-            password,
-            passwordInput,
-            breakElem,
-            loginButton
+            this.title,
+            this.userName,
+            this.userNameInput,
+            this.createElement("br"),
+            this.password,
+            this.passwordInput,
+            this.createElement("br"),
+            this.loginButton,
+            this.createElement("br"),
+            this.errorLabel
         )
 
         return this.container;
