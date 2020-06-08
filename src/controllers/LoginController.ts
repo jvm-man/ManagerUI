@@ -1,8 +1,11 @@
 import { BaseController } from "./BaseController";
+import { LoginService } from "../services/LoginService";
 
 
 
 export class LoginController extends BaseController {
+
+    private loginService = new LoginService();
 
     private title = this.createElement("h2", 'Please Login');
     private userName = this.createElement("label", "Username:");
@@ -11,18 +14,27 @@ export class LoginController extends BaseController {
     private password = this.createElement("label", "Password:");
     private passwordInput = this.createElement("input");
     private br2 = this.createElement("br");
-    private errorLabel = this.createElement("label")
 
-    private loginButton = this.createElement("button", 'Login', () => {
+    private loginButton = this.createElement("button", 'Login', async () => {
         if (this.userNameInput.value && this.passwordInput.value) {
             this.resetErrorLabel();
-
+            const result = await this.loginService.login(
+                this.userNameInput.value,
+                this.passwordInput.value
+            )
+            if (result) {
+                this.router.switchToDashboardView(result);
+            } else {
+                this.showErrorLabel('wrong username or password!');
+            }
 
 
         } else {
             this.showErrorLabel('Please fill both fields!');
         }
     });
+    private br3 = this.createElement("br");
+    private errorLabel = this.createElement("label");
 
     private resetErrorLabel() {
         this.errorLabel.style.color = 'red';
