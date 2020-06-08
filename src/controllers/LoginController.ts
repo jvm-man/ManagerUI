@@ -7,8 +7,10 @@ export class LoginController extends BaseController {
     private title = this.createElement("h2", 'Please Login');
     private userName = this.createElement("label", "Username:");
     private userNameInput = this.createElement("input");
+    private br = this.createElement("br");
     private password = this.createElement("label", "Password:");
     private passwordInput = this.createElement("input");
+    private br2 = this.createElement("br");
     private errorLabel = this.createElement("label")
 
     private loginButton = this.createElement("button", 'Login', () => {
@@ -36,23 +38,6 @@ export class LoginController extends BaseController {
     public createView(): HTMLDivElement {
         this.passwordInput.type = 'Password';
         this.resetErrorLabel()
-
-
-
-
-
-        this.container.append(
-            this.title,
-            this.userName,
-            this.userNameInput,
-            this.createElement("br"),
-            this.password,
-            this.passwordInput,
-            this.createElement("br"),
-            this.loginButton,
-            this.createElement("br"),
-            this.errorLabel
-        )
 
         return this.container;
     }
