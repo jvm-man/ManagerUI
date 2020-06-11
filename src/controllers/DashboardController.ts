@@ -1,6 +1,7 @@
 import { BaseController } from "./BaseController";
 import { SessionToken, AccessRight } from "../models/AuthenticationModels";
 import { DataService } from "../services/DataService";
+import { User } from "../models/DataModels";
 
 
 export class DashboardController extends BaseController {
@@ -9,6 +10,9 @@ export class DashboardController extends BaseController {
     private searchArea: HTMLInputElement | undefined;
     private searchResultArea: HTMLDivElement | undefined;
     private dataService: DataService = new DataService();
+
+    private selectedUser: User | undefined;
+    private selectedLabel: HTMLLabelElement | undefined;
 
     public setSessionToken(sessionToken: SessionToken) {
         this.sessionToken = sessionToken;
@@ -54,15 +58,27 @@ export class DashboardController extends BaseController {
                     this.searchArea!.value
                 )
                 for (const user of users) {
-                    this.searchResultArea!.append(
-                        this.createElement('label', JSON.stringify(user))
-                    )
+                    const label = this.createElement('label', JSON.stringify(user));
+                    label.onclick = () => {
+                        label.classList.toggle('selectedLabel');
+                        this.selectedUser = user;
+                        this.selectedLabel = label;
+                    }
+                    this.searchResultArea!.append(label);
                     this.searchResultArea!.append(
                         document.createElement('br')
                     )
                 }
                 break;
-
+            case AccessRight.DELETE:
+                if (this.selectedUser) {
+                    await this.dataService.deleteUser(
+                        this.sessionToken!.tokenId,
+                        this.selectedUser
+                    )
+                    this.selectedLabel!.innerHTML = ''
+                }
+                break
             default:
                 break;
         }
