@@ -1,8 +1,10 @@
 import { BaseController } from "./BaseController";
 import { LoginService } from "../services/LoginService";
+import { LinkTextValue, classDecorator , someDecorator} from "./Decorators";
 
 
-
+@classDecorator
+@someDecorator('abcas')
 export class LoginController extends BaseController {
 
     private loginService = new LoginService();
@@ -25,29 +27,29 @@ export class LoginController extends BaseController {
             if (result) {
                 this.router.switchToDashboardView(result);
             } else {
-                this.showErrorLabel('wrong username or password!');
+                this.errorLabelText = 'wrong username or password!'
             }
 
 
         } else {
-            this.showErrorLabel('Please fill both fields!');
+            this.errorLabelText = 'Please fill both fields!';
         }
     });
     private br3 = this.createElement("br");
+
     private errorLabel = this.createElement("label");
+
+    @LinkTextValue('errorLabelId')
+    private errorLabelText: string = '';
+    
 
     private resetErrorLabel() {
         this.errorLabel.style.color = 'red';
         this.errorLabel.style.visibility = 'hidden';
     }
-    private showErrorLabel(errorMessage: string) {
-        this.errorLabel.innerText = errorMessage;
-        this.errorLabel.style.visibility = 'visible';
-    }
-
-
 
     public createView(): HTMLDivElement {
+        this.errorLabel.id = 'errorLabelId';
         this.passwordInput.type = 'Password';
         this.resetErrorLabel()
 
