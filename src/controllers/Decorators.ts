@@ -3,6 +3,7 @@ import { BaseController } from "./BaseController";
 
 export function LinkTextValue(elementId: string) {
     return function (target: BaseController, key: string) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let property = (target as any)[key];
 
         const getter = () => {
