@@ -11,7 +11,7 @@ export class Main {
         console.log('Constructed new Instance of the program');
     }
 
-    public launchApp() {
+    public launchApp(): void {
         this.router.handleRequest();
     }
 }

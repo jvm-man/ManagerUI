@@ -14,6 +14,7 @@ export abstract class BaseController {
     public abstract createView(): HTMLDivElement
 
     protected createElement<K extends keyof HTMLElementTagNameMap>(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         elementType: K, innerText?: string, action?: any
     ): HTMLElementTagNameMap[K] {
         const element = document.createElement(elementType);

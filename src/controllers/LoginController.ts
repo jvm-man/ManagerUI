@@ -38,7 +38,7 @@ export class LoginController extends BaseController {
     private errorLabel = this.createElement("label");
 
     @LinkTextValue('errorLabel')
-    private errorLabelText: string = '';
+    private errorLabelText = '';
 
 
     public createView(): HTMLDivElement {

@@ -53,6 +53,7 @@ export class DashboardController extends BaseController {
         console.log(`button ${access} clicked`);
         switch (access) {
             case AccessRight.READ:
+                // eslint-disable-next-line no-case-declarations
                 const users = await this.dataService.getUsers(
                     this.sessionToken!.tokenId,
                     this.searchArea!.value
